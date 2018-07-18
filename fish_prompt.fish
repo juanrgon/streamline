@@ -40,6 +40,7 @@ function fish_prompt
       set fg_colors $fg_colors (set_color $_fg_colors[$i])
     end
 
+    echo -n -s $normal_color
     echo -n -s $blue_text $arrow_top_left
     echo -n -s $fg_colors[1] $bg_colors[1] " $texts[1] "
     for i in (seq (count $texts))[2..-2]
@@ -50,4 +51,5 @@ function fish_prompt
     echo -n -s $fg_colors[-1] $bg_colors[-1] " $texts[-1] "
     echo -n -s $normal_color (set_color $_bg_colors[-1]) $divider_icon
     echo -n -s -e $normal_color "\n" $blue_text $arrow_bottom_left
+    echo -n -s $normal_color
 end

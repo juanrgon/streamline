@@ -24,6 +24,7 @@ function fish_right_prompt
         set fg_colors $fg_colors (set_color $_fg_colors[$i])
     end
 
+    echo -n -s (set_color normal)
     echo -n -s (set_color $_bg_colors[1]) $divider
     echo -n -s $fg_colors[1] $bg_colors[1] " $texts[1] "
     if [ (count $texts) -gt 1 ]
@@ -32,4 +33,5 @@ function fish_right_prompt
           echo -n -s $fg_colors[$i] $bg_colors[$i] " $texts[$i] "
       end
     end
+    echo -n -s (set_color normal)
 end
