@@ -37,6 +37,8 @@ function fish_prompt
         set yadm_status 'Yadm '
       case 2
         set yadm_status 'Yadm '
+      case '*'
+        set yadm_status 0
     end
 
     if [ $yadm_status != 0 ]
