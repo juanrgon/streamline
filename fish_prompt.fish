@@ -2,7 +2,7 @@ function fish_prompt
     set -l last_command_status $status
 
     set -l arrow_top_left '╭─'
-    set -l arrow_bottom_left '╰'
+    set -l arrow_bottom_left '╰ '
     set -l divider_icon ''
 
     set -l normal_color (set_color normal)
