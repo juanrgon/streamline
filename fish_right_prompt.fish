@@ -32,7 +32,7 @@ function fish_right_prompt
     set -l div_bg normal
     echo -n -s (set_color normal)
     for segment in $segments
-        set components (eval $segment)
+        set -l components (eval $segment)
         set -l text $components[1]
         set -l bg_color $components[2]
         set -l fg_color $components[3]

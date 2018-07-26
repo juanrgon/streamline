@@ -1,8 +1,4 @@
-function fish_prompt
-    set -l arrow_top_left '╭─'
-    set -l arrow_bottom_left '╰ '
-    set -l divider_icon ''
-
+function streamline_os_icon_segment
     set -l os_icon
     switch (uname)
       case Darwin
@@ -12,25 +8,30 @@ function fish_prompt
       case Windows_NT
         set os_icon ''
     end
-    set cwd (prompt_pwd)
+    echo $os_icon
+    echo black
+    echo white
+end
 
-    set -l normal_color (set_color normal)
-    set -l blue_text (set_color blue)
+function streamline_pwd_segment
+    echo (prompt_pwd)
+    echo blue
+    echo white
+end
 
-    set -l segments    $os_icon  $cwd
-    set -l bg_colors   black     blue
-    set -l fg_colors   white     white
-
+function streamline_git_segment
     if git_is_repo
-        set segments $segments " "(git_branch_name)
-        set fg_colors $fg_colors black
+        echo " "(git_branch_name)
         if git_is_touched
-          set bg_colors $bg_colors yellow
+            echo yellow
         else
-          set bg_colors $bg_colors green
+            echo green
         end
+        echo black
     end
+end
 
+function streamline_yadm_segment
     set -l yadm_status
     switch $YADM_STATE
       case 1
@@ -42,19 +43,48 @@ function fish_prompt
     end
 
     if [ $yadm_status != 0 ]
-        set  segments   $segments   $yadm_status
-        set  bg_colors  $bg_colors  black
-        set  fg_colors  $fg_colors  magenta
+        echo $yadm_status
+        echo black
+        echo magenta
     end
+end
 
-    set -l divider_bgs $bg_colors[2..(count $bg_colors)] normal
-    set -l divider_fgs $bg_colors
+function fish_prompt
+    set -l arrow_top_left '╭─'
+    set -l arrow_bottom_left '╰ '
+
+    set -l normal_color (set_color normal)
+    set -l blue_text (set_color blue)
+
+    set -l segments streamline_os_icon_segment streamline_pwd_segment streamline_git_segment streamline_yadm_segment
 
     # Prompt elements
     echo -n -s $normal_color $blue_text $arrow_top_left
-    for i in (seq (count $segments))
-      echo -n -s (set_color -b $bg_colors[$i]) (set_color $fg_colors[$i]) " $segments[$i] "
-      echo -n -s $normal_color (set_color -b $divider_bgs[$i]) (set_color $divider_fgs[$i]) $divider_icon
+    set bg_color normal
+    set divider_icon
+    for segment in $segments
+        set -l prev_bg_color $bg_color
+        set -l components (eval $segment)
+
+        set -l text
+        set -l fg_color
+        switch (count $components)
+          case 0
+            continue
+          case 3
+              set text $components[1]
+              set bg_color $components[2]
+              set fg_color $components[3]
+          case '*'
+              set text "("ERROR with $segment")"
+              set bg_color black
+              set fg_color red
+        end
+
+        echo -n -s (set_color -b $bg_color) (set_color $prev_bg_color) $divider
+        echo -n -s (set_color -b $bg_color) (set_color $fg_color) " $text "
+        set divider ''
     end
+    echo -n -s (set_color normal) (set_color $bg_color) $divider
     echo -n -s -e $normal_color "\n" $blue_text $arrow_bottom_left $normal_color
 end
