@@ -1,5 +1,7 @@
 function fish_right_prompt
+    set -l normal_color (set_color normal)
     set -l divider ''
+
     set -l success ''
     set -l failure ''
 
@@ -15,23 +17,21 @@ function fish_right_prompt
             set status_color red
     end
 
-    set -l texts       $status_symbol
-    set -l _bg_colors  black
-    set -l _fg_colors  $status_color
+    set -l python_yellow 'FFDB4F'
+    set -l python_blue '3E7AAB'
+    set -l python_version " "(pyenv version-name)
 
-    for i in (seq (count $texts))
-        set bg_colors $bg_colors (set_color -b $_bg_colors[$i])
-        set fg_colors $fg_colors (set_color $_fg_colors[$i])
-    end
+    set -l segments   $status_symbol   $python_version
+    set -l bg_colors  black            $python_blue
+    set -l fg_colors  $status_color    $python_yellow
+
+    set -l div_fgs $bg_colors
+    set -l div_bgs normal $bg_colors
 
     echo -n -s (set_color normal)
-    echo -n -s (set_color $_bg_colors[1]) $divider
-    echo -n -s $fg_colors[1] $bg_colors[1] " $texts[1] "
-    if [ (count $texts) -gt 1 ]
-      for i in (seq (count $texts))[2..-2]
-          echo -n -s (set_color $_bg_colors[(math "$i - 1")]) $bg_colors[$i] $divider
-          echo -n -s $fg_colors[$i] $bg_colors[$i] " $texts[$i] "
-      end
+    for i in (seq (count $segments))
+      echo -n -s (set_color -b $div_bgs[$i]) (set_color $div_fgs[$i]) $divider
+      echo -n -s (set_color -b $bg_colors[$i]) (set_color $fg_colors[$i]) " $segments[$i] "
     end
     echo -n -s (set_color normal)
 end

@@ -18,11 +18,11 @@ function fish_prompt
     set -l blue_text (set_color blue)
 
     set -l segments    $os_icon  $cwd
-    set -l bg_colors  black     blue
-    set -l fg_colors  white     black
+    set -l bg_colors   black     blue
+    set -l fg_colors   white     white
 
     if git_is_repo
-        set segments $segments (git_branch_name)
+        set segments $segments " "(git_branch_name)
         set fg_colors $fg_colors black
         if git_is_touched
           set bg_colors $bg_colors yellow
