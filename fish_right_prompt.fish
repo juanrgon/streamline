@@ -1,10 +1,6 @@
-function fish_right_prompt
-    set -l normal_color (set_color normal)
-    set -l divider ''
-
+function streamline_status_segment
     set -l success ''
     set -l failure ''
-
 
     set -l status_symbol
     set -l status_color
@@ -16,22 +12,34 @@ function fish_right_prompt
             set status_symbol $failure
             set status_color red
     end
+    echo $status_symbol
+    echo black
+    echo $status_color
+end
 
-    set -l python_yellow 'FFDB4F'
-    set -l python_blue '3E7AAB'
-    set -l python_version " "(pyenv version-name)
+function streamline_pyenv_python_version_name
+    echo " "(pyenv version-name)
+    echo '3E7AAB'
+    echo 'FFDB4F'
+end
 
-    set -l segments   $status_symbol   $python_version
-    set -l bg_colors  black            $python_blue
-    set -l fg_colors  $status_color    $python_yellow
+function fish_right_prompt
+    set -l normal_color (set_color normal)
+    set -l divider ''
 
-    set -l div_fgs $bg_colors
-    set -l div_bgs normal $bg_colors
+    set -l segments streamline_status_segment streamline_pyenv_python_version_name
 
+    set -l div_bg normal
     echo -n -s (set_color normal)
-    for i in (seq (count $segments))
-      echo -n -s (set_color -b $div_bgs[$i]) (set_color $div_fgs[$i]) $divider
-      echo -n -s (set_color -b $bg_colors[$i]) (set_color $fg_colors[$i]) " $segments[$i] "
+    for segment in $segments
+        set components (eval $segment)
+        set -l text $components[1]
+        set -l bg_color $components[2]
+        set -l fg_color $components[3]
+
+        echo -n -s (set_color -b $div_bg) (set_color $bg_color) $divider
+        echo -n -s (set_color -b $bg_color) (set_color $fg_color) " $text "
+        set -l div_bg $bg_color
     end
     echo -n -s (set_color normal)
 end
