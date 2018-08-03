@@ -58,16 +58,20 @@ function fish_prompt
 
     set -l segments streamline_os_icon_segment streamline_pwd_segment streamline_git_segment streamline_yadm_segment
 
-    set prompt_line_1 '> '
-    set prompt_line_2
+    set prompt_line_1_leader '> '
+    set prompt_line_2_leader
     if [ (count $segments) != 0 ]
-        set prompt_line_1 $normal_color $blue_text $arrow_top_left
-        set prompt_line_2 $normal_color "\n" $blue_text $arrow_bottom_left $normal_color
+        set prompt_line_1_leader $normal_color $blue_text $arrow_top_left
+        set prompt_line_2_leader $normal_color "\n" $blue_text $arrow_bottom_left $normal_color
     end
 
     # Prompt elements
-    echo -n -s $prompt_line_1
+    ## Initialize vars
     set bg_color normal
+    set fg_color normal
+    set text
+
+    echo -n -s $prompt_line_1_leader #
     set divider_icon
     for segment in $segments
         set -l prev_bg_color $bg_color
@@ -93,5 +97,5 @@ function fish_prompt
         set divider ''
     end
     echo -n -s (set_color normal) (set_color $bg_color) $divider
-    echo -n -s -e $prompt_line_2
+    echo -n -s -e $prompt_line_2_leader
 end
