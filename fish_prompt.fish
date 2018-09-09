@@ -33,24 +33,6 @@ function streamline_git_segment
     end
 end
 
-function streamline_yadm_segment
-    set -l yadm_status
-    switch $YADM_STATE
-      case 1
-        set yadm_status 'Yadm '
-      case 2
-        set yadm_status 'Yadm '
-      case '*'
-        set yadm_status 0
-    end
-
-    if [ $yadm_status != 0 ]
-        echo $yadm_status
-        echo black
-        echo magenta
-    end
-end
-
 function fish_prompt
     set -l arrow_top_left '╭─'
     set -l arrow_bottom_left '╰ '
@@ -58,7 +40,7 @@ function fish_prompt
     set -l normal_color (set_color normal)
     set -l blue_text (set_color blue)
 
-    set -l segments streamline_os_icon_segment streamline_pwd_segment streamline_git_segment streamline_yadm_segment
+    set -l segments streamline_os_icon_segment streamline_pwd_segment streamline_git_segment
     if set -q streamline_segments
         set segments $streamline_segments
     end
