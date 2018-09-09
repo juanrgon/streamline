@@ -9,6 +9,7 @@
 
 <br/>
 
+Inspired by the ZSH theme [Powerlevel9k](https://github.com/bhilburn/powerlevel9k)
 
 ## Install
 
@@ -17,18 +18,14 @@ $ omf install streamline
 ```
 
 
-## Features
-
-* Lorem ipsum dolor sit amet.
-* Consectetur adipisicing elit.
-
-
-## Screenshot
+## Default Prompt
 
 <p align="center">
 <img src="{{SCREENSHOT_URL}}">
 </p>
 
+
+## Customizing
 
 # License
 
