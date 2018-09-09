@@ -21,7 +21,7 @@ $ omf install streamline
 ## Default Prompt
 
 <p align="center">
-<img src="{{SCREENSHOT_URL}}">
+<img src="screenshot.png">
 </p>
 
 
