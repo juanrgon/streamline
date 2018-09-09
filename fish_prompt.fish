@@ -70,7 +70,6 @@ function fish_prompt
         set prompt_line_2_leader $normal_color "\n" $blue_text $arrow_bottom_left $normal_color
     end
 
-    # Prompt elements
     ## Initialize vars
     set bg_color normal
     set fg_color normal
