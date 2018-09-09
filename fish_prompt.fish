@@ -9,13 +9,13 @@ function streamline_os_icon_segment
         set os_icon ''
     end
     echo $os_icon
-    echo black
     echo white
+    echo black
 end
 
 function streamline_pwd_segment
     echo (prompt_pwd)
-    echo blue
+    echo cyan
     echo black
 end
 
