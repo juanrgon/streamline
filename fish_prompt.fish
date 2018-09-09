@@ -22,7 +22,9 @@ end
 function streamline_git_segment
     if git_is_repo
         echo " "(git_branch_name)
-        if git_is_touched
+        if git_is_dirty
+            echo red
+        else if git_is_staged
             echo yellow
         else
             echo green
