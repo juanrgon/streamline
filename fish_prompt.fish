@@ -16,7 +16,7 @@ end
 function streamline_pwd_segment
     echo (prompt_pwd)
     echo blue
-    echo white
+    echo black
 end
 
 function streamline_git_segment
