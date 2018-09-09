@@ -27,7 +27,12 @@ function fish_right_prompt
     set -l normal_color (set_color normal)
     set -l divider ''
 
-    set -l segments streamline_status_segment streamline_pyenv_python_version_name
+    set -l segments
+    if set -q streamline_right_segments
+        set segments $streamline_right_segments
+    else
+        set segments streamline_status_segment streamline_pyenv_python_version_name
+    end
 
     set -l div_bg normal
     echo -n -s (set_color normal)

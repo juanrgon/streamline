@@ -59,6 +59,9 @@ function fish_prompt
     set -l blue_text (set_color blue)
 
     set -l segments streamline_os_icon_segment streamline_pwd_segment streamline_git_segment streamline_yadm_segment
+    if set -q streamline_segments
+        set segments $streamline_segments
+    end
 
     set prompt_line_1_leader '> '
     set prompt_line_2_leader
