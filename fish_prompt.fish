@@ -60,12 +60,14 @@ function fish_prompt
 end
 
 function streamline_print_prompt_leader -a linenum
-    set -l leader $streamline_leaders[$linenum]
-    set -l leader_components (eval $leader)
-    set -l leader_text $leader_components[1]
-    set -l leader_bg_color $leader_components[2]
-    set -l leader_fg_color $leader_components[3]
-    echo -n -s (set_color -b $leader_bg_color) (set_color $leader_fg_color) $leader_text
+    if [ (count $streamline_leaders) -ge $linenum ]
+        set -l leader $streamline_leaders[$linenum]
+        set -l leader_components (eval $leader)
+        set -l leader_text $leader_components[1]
+        set -l leader_bg_color $leader_components[2]
+        set -l leader_fg_color $leader_components[3]
+        echo -n -s (set_color -b $leader_bg_color) (set_color $leader_fg_color) $leader_text
+    end
 end
 
 function streamline_prompt
