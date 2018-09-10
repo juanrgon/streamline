@@ -34,30 +34,46 @@ function streamline_git_segment
 end
 
 function fish_prompt
-    set -l arrow_top_left '╭─'
-    set -l arrow_bottom_left '╰ '
-
-    set -l normal_color (set_color normal)
-    set -l blue_text (set_color blue)
-
     set -l segments streamline_os_icon_segment streamline_pwd_segment streamline_git_segment
     if set -q streamline_segments
         set segments $streamline_segments
     end
+    set segments (string join ' ' $segments)
 
-    set prompt_line_1_leader '> '
-    set prompt_line_2_leader
-    if [ (count $segments) != 0 ]
-        set prompt_line_1_leader $normal_color $blue_text $arrow_top_left
-        set prompt_line_2_leader $normal_color "\n" $blue_text $arrow_bottom_left $normal_color
+    set -l streamline_multiline_segments (string split '\n' $segments)
+
+    set -l linenum 0
+    for cmds_string in $streamline_multiline_segments
+        set linenum (math $linenum + 1)
+        if [ $linenum -gt 1 ]
+            echo -n -s -e (set_color normal) '\n'
+        end
+
+        streamline_print_prompt_leader $linenum
+
+        set -l prompt_cmds $cmds_string
+        set prompt_cmds (string trim $prompt_cmds)
+        set prompt_cmds (string replace -a -r '\s+' ' ' $prompt_cmds)
+        streamline_prompt (string split ' ' $prompt_cmds)
     end
 
-    ## Initialize vars
+end
+
+function streamline_print_prompt_leader -a linenum
+    set -l leader $streamline_leaders[$linenum]
+    set -l leader_components (eval $leader)
+    set -l leader_text $leader_components[1]
+    set -l leader_bg_color $leader_components[2]
+    set -l leader_fg_color $leader_components[3]
+    echo -n -s (set_color -b $leader_bg_color) (set_color $leader_fg_color) $leader_text
+end
+
+function streamline_prompt
+    set -l segments $argv
     set bg_color normal
     set fg_color normal
     set text
 
-    echo -n -s $prompt_line_1_leader #
     set divider_icon
     for segment in $segments
         set -l prev_bg_color $bg_color
@@ -82,6 +98,5 @@ function fish_prompt
         echo -n -s (set_color -b $bg_color) (set_color $fg_color) " $text "
         set divider ''
     end
-    echo -n -s (set_color normal) (set_color $bg_color) $divider
-    echo -n -s -e $prompt_line_2_leader
+    echo -n -s (set_color normal) (set_color $bg_color) $divider ' '
 end

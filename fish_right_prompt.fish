@@ -1,22 +1,3 @@
-function streamline_status_segment
-    set -l success ''
-    set -l failure ''
-
-    set -l status_symbol
-    set -l status_color
-    switch $status
-        case 0
-            set status_symbol $success
-            set status_color green
-        case '*'
-            set status_symbol $failure
-            set status_color red
-    end
-    echo $status_symbol
-    echo black
-    echo $status_color
-end
-
 function streamline_pyenv_python_version_name
     echo " "(pyenv version-name)
     echo '3E7AAB'
@@ -31,7 +12,7 @@ function fish_right_prompt
     if set -q streamline_right_segments
         set segments $streamline_right_segments
     else
-        set segments streamline_status_segment streamline_pyenv_python_version_name
+        set segments streamline_pyenv_python_version_name
     end
 
     set -l div_bg normal
