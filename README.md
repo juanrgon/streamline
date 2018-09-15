@@ -50,6 +50,37 @@ function streamline_os_icon_segment
 end
 ```
 
+#### streamline_pwd_segment
+
+Current directory
+
+```sh
+function streamline_pwd_segment
+    echo (prompt_pwd)
+    echo blue
+    echo black
+end
+```
+#### streamline_git_segment
+
+Current git status
+
+```sh
+function streamline_git_segment
+    if git_is_repo
+        echo " "(git_branch_name)
+        if git_is_dirty
+            echo red
+        else if git_is_staged
+            echo yellow
+        else
+            echo green
+        end
+        echo black
+    end
+end
+```
+
 # License
 
 [MIT][mit] © [Juan Gonzalez][author]
