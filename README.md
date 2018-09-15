@@ -25,7 +25,30 @@ $ omf install https://github.com/juanrgon/streamline
 </p>
 
 
-## Customizing
+## Customizable
+
+## Builtin Segments
+
+#### streamline_os_icon_segment
+
+Icon of the current OS
+
+```sh
+function streamline_os_icon_segment
+    set -l os_icon
+    switch (uname)
+        case Darwin
+            set os_icon ''
+        case Linux
+            set os_icon ''
+        case Windows_NT
+            set os_icon ''
+    end
+    echo $os_icon
+    echo black
+    echo white
+end
+```
 
 # License
 
