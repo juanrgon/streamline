@@ -25,7 +25,22 @@ $ omf install https://github.com/juanrgon/streamline
 </p>
 
 
-## Customizable
+## Customization
+
+The
+
+A segment is a command that echoes
+
+Example:
+
+```sh
+function my_custom_segment
+    echo 'I <3 streamline'
+    echo red
+    echo white
+end
+```
+
 
 ## Builtin Segments
 
