@@ -14,7 +14,7 @@ Inspired by the ZSH theme [Powerlevel9k](https://github.com/bhilburn/powerlevel9
 ## Install
 
 ```fish
-$ omf install streamline
+$ omf install https://github.com/juanrgon/streamline
 ```
 
 
