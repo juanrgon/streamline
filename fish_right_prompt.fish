@@ -1,9 +1,3 @@
-function streamline_pyenv_python_version_name
-    echo " "(pyenv version-name)
-    echo '3E7AAB'
-    echo 'FFDB4F'
-end
-
 function fish_right_prompt
     set -l normal_color (set_color normal)
     set -l divider ''
@@ -11,8 +5,6 @@ function fish_right_prompt
     set -l segments
     if set -q streamline_right_segments
         set segments $streamline_right_segments
-    else
-        set segments streamline_pyenv_python_version_name
     end
 
     set -l div_bg normal
