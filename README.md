@@ -27,9 +27,11 @@ $ omf install https://github.com/juanrgon/streamline
 
 ## Customization
 
-The
+A segment is any command that echoes up to three lines:
 
-A segment is a command that echoes
+- text
+- a color for the text (optional)
+- a color for the background of the text
 
 Example:
 
